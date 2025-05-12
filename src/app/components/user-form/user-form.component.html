@@ -1,0 +1,20 @@
+<form (ngSubmit)="onSubmit()">
+    <div>
+        <input class="form-control my-2" name="name" placeholder="Name" [(ngModel)]="user.name" autocomplete="off">
+    </div>
+    <div>
+        <input class="form-control my-2" name="lastname" placeholder="Lastname" [(ngModel)]="user.lastname" autocomplete="off">
+    </div>
+    <div>
+        <input class="form-control my-2" name="email" placeholder="Email" [(ngModel)]="user.email" autocomplete="off">
+    </div>
+    <div>
+        <input class="form-control my-2" name="username" placeholder="Username" [(ngModel)]="user.username" autocomplete="off">
+    </div>
+    <div>
+        <input type="password" class="form-control my-2" name="password" placeholder="Password" [(ngModel)]="user.password" autocomplete="off">
+    </div>
+    <div>
+        <button class="btn btn-success" type="submit">Create</button>
+    </div>
+</form>
