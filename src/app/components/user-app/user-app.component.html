@@ -2,10 +2,10 @@
     <h1>{{title}}</h1>
     <div class="row">
         <div class="col">
-            <app-user-form (userEventEmitter)="addUser($event)"/>
+            <app-user-form (userEventEmitter)="addUser($event)" [user]="userSelected"/>
         </div>
         <div class="col">
-            <app-user [users]="users" (idUserEventEmitter)="removeUser($event)"/>
+            <app-user [users]="users" (idUserEventEmitter)="removeUser($event)" (userEventEmitter)="setSelectedUser($event)"/>
         </div>
     </div>
 </div>

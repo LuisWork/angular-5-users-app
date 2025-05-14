@@ -64,6 +64,7 @@
         }
     }
     <div>
-        <button class="btn btn-success" type="submit" [disabled]="userForm.invalid">Create</button>
+        <button class="btn btn-dark m-2" type="submit" [disabled]="userForm.invalid">{{(user.id > 0) ? 'Update' : 'Create'}}</button>
+        <button class="btn btn-success m-2" type="button" (click)="onClear(userForm)">Clear</button>
     </div>
 </form>

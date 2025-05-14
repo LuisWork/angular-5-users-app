@@ -13,8 +13,13 @@ export class UserComponent {
 
   @Output() idUserEventEmitter: EventEmitter<number> = new EventEmitter();
 
-  onRemoveUser(id: number): void {
+  @Output() userEventEmitter: EventEmitter<User> = new EventEmitter();
 
+  onRemoveUser(id: number): void {
     this.idUserEventEmitter.emit(id);
+  }
+
+  onSelectedUser(user: User): void{
+    this.userEventEmitter.emit(user);
   }
 }
