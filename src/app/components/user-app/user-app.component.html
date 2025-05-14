@@ -5,7 +5,7 @@
             <app-user-form (userEventEmitter)="addUser($event)"/>
         </div>
         <div class="col">
-            <app-user [users]="users" />
+            <app-user [users]="users" (idUserEventEmitter)="removeUser($event)"/>
         </div>
     </div>
 </div>

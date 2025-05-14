@@ -10,6 +10,7 @@
                         <th>Lastname:</th>
                         <th>Email:</th>
                         <th>Username:</th>
+                        <th>Remove:</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -19,6 +20,7 @@
                         <td>{{user.lastname}}</td>
                         <td>{{user.email}}</td>
                         <td>{{user.username}}</td>
+                        <td><button class="btn btn-danger btn-sm" (click)="onRemoveUser(user.id)">Remove</button></td>
                     </tr>
                     }
                 </tbody>

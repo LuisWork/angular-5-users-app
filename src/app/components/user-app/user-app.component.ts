@@ -26,4 +26,12 @@ export class UserAppComponent implements OnInit {
     this.users = [... this.users, { ...user }];
   }
 
+  removeUser(id: number): void {
+    const confirmRemove = confirm('Are you sure you want to delete?');
+
+    if (confirmRemove) {
+      this.users = this.users.filter(user => user.id != id);
+    }
+  }
+
 }
