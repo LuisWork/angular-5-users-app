@@ -1,70 +1,86 @@
-<form (ngSubmit)="onSubmit(userForm)" #userForm="ngForm">
-    <div>
-        <input class="form-control my-2" name="name" placeholder="Name" [(ngModel)]="user.name" autocomplete="off"
-            required minlength="5" #name="ngModel">
-        @if(name.invalid && (name.dirty || name.touched)) {
-            @if(name.errors!['required']) {
-                <div class="text-danger">Name is required</div>
-            }
-            @if(name.errors!['minlength']) {
-                <div class="text-danger">Name field must be has 5 characters or more</div>
-            }
-        }
+<div class="modal abrir-modal animacion fadeIn" tabindex="-1" style="display:block;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{(user.id > 0) ? 'Update' : 'Create'}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="onOpenClose()"></button>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="onSubmit(userForm)" #userForm="ngForm">
+                    <div>
+                        <input class="form-control my-2" name="name" placeholder="Name" [(ngModel)]="user.name"
+                            autocomplete="off" required minlength="5" #name="ngModel">
+                        @if(name.invalid && (name.dirty || name.touched)) {
+                        @if(name.errors!['required']) {
+                        <div class="text-danger">Name is required</div>
+                        }
+                        @if(name.errors!['minlength']) {
+                        <div class="text-danger">Name field must be has 5 characters or more</div>
+                        }
+                        }
+                    </div>
+                    <div>
+                        <input class="form-control my-2" name="lastname" placeholder="Lastname"
+                            [(ngModel)]="user.lastname" autocomplete="off" required minlength="5" #lastname="ngModel">
+                    </div>
+                    @if(lastname.invalid && (lastname.dirty || lastname.touched)) {
+                    @if(lastname.errors!['required']) {
+                    <div class="text-danger">Lastname is required</div>
+                    }
+                    @if(lastname.errors!['minlength']) {
+                    <div class="text-danger">Lastname field must be has 5 characters or more</div>
+                    }
+                    }
+                    <div>
+                        <input class="form-control my-2" name="email" type="email" [(ngModel)]="user.email"
+                            autocomplete="off" required email minlength="5" #email="ngModel" placeholder="Email">
+                    </div>
+                    @if(email.invalid && (email.dirty || email.touched)) {
+                    @if(email.errors!['required']) {
+                    <div class="text-danger">Email is required</div>
+                    }
+                    @if(email.errors!['minlength']) {
+                    <div class="text-danger">Email field must be has 5 characters or more</div>
+                    }
+                    @if(email.errors!['email']) {
+                    <div class="text-danger">Email invalid format</div>
+                    }
+                    }
+                    <div>
+                        <input class="form-control my-2" name="username" placeholder="Username"
+                            [(ngModel)]="user.username" autocomplete="off" required minlength="5" #username="ngModel">
+                    </div>
+                    @if(username.invalid && (username.dirty || username.touched)) {
+                    @if(username.errors!['required']) {
+                    <div class="text-danger">Username is required</div>
+                    }
+                    @if(username.errors!['minlength']) {
+                    <div class="text-danger">Username field must be has 5 characters or more</div>
+                    }
+                    }
+
+                    <div>
+                        <input type="password" class="form-control my-2" name="password" placeholder="Password"
+                            [(ngModel)]="user.password" autocomplete="off" required minlength="5" #password="ngModel">
+                    </div>
+                    @if(password.invalid && (password.dirty || password.touched)) {
+                    @if(password.errors!['required']) {
+                    <div class="text-danger">Password is required</div>
+                    }
+                    @if(password.errors!['minlength']) {
+                    <div class="text-danger">Password field must be has 5 characters or more</div>
+                    }
+                    }
+                    <div>
+                        <button class="btn btn-dark m-2" type="submit" [disabled]="userForm.invalid">{{(user.id > 0) ?
+                            'Update' : 'Create'}}</button>
+                        <button class="btn btn-success m-2" type="button" (click)="onClear(userForm)">Clear</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="onOpenClose()">Close</button>
+            </div>
+        </div>
     </div>
-    <div>
-        <input class="form-control my-2" name="lastname" placeholder="Lastname" [(ngModel)]="user.lastname"
-            autocomplete="off" required minlength="5" #lastname="ngModel">
-    </div>
-    @if(lastname.invalid && (lastname.dirty || lastname.touched)) {
-        @if(lastname.errors!['required']) {
-            <div class="text-danger">Lastname is required</div>
-        }
-        @if(lastname.errors!['minlength']) {
-                <div class="text-danger">Lastname field must be has 5 characters or more</div>
-        }
-    }
-    <div>
-        <input class="form-control my-2" name="email" type="email" [(ngModel)]="user.email" autocomplete="off" required email
-            minlength="5" #email="ngModel" placeholder="Email">
-    </div>
-    @if(email.invalid && (email.dirty || email.touched)) {
-        @if(email.errors!['required']) {
-            <div class="text-danger">Email is required</div>
-        }
-        @if(email.errors!['minlength']) {
-            <div class="text-danger">Email field must be has 5 characters or more</div>
-        }
-        @if(email.errors!['email']) {
-            <div class="text-danger">Email invalid format</div>
-        }
-    }
-    <div>
-        <input class="form-control my-2" name="username" placeholder="Username" [(ngModel)]="user.username"
-            autocomplete="off" required minlength="5" #username="ngModel">
-    </div>
-    @if(username.invalid && (username.dirty || username.touched)) {
-        @if(username.errors!['required']) {
-            <div class="text-danger">Username is required</div>
-        }
-        @if(username.errors!['minlength']) {
-            <div class="text-danger">Username field must be has 5 characters or more</div>
-        }
-    }
-    
-    <div>
-        <input type="password" class="form-control my-2" name="password" placeholder="Password"
-            [(ngModel)]="user.password" autocomplete="off" required minlength="5" #password="ngModel">
-    </div>
-    @if(password.invalid && (password.dirty || password.touched)) {
-        @if(password.errors!['required']) {
-            <div class="text-danger">Password is required</div>
-        }
-        @if(password.errors!['minlength']) {
-            <div class="text-danger">Password field must be has 5 characters or more</div>
-        }
-    }
-    <div>
-        <button class="btn btn-dark m-2" type="submit" [disabled]="userForm.invalid">{{(user.id > 0) ? 'Update' : 'Create'}}</button>
-        <button class="btn btn-success m-2" type="button" (click)="onClear(userForm)">Clear</button>
-    </div>
-</form>
+</div>
