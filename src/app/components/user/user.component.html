@@ -24,7 +24,7 @@
             <td>{{user.lastname}}</td>
             <td>{{user.email}}</td>
             <td>{{user.username}}</td>
-            <td><button class="btn btn-success btn-sm" (click)="onSelectedUser(user)">Update</button></td>
+            <td><button class="btn btn-success btn-sm" [routerLink]="['/users/edit', user.id]">Update</button></td>
             <td><button class="btn btn-danger btn-sm" (click)="onRemoveUser(user.id)">Remove</button></td>
         </tr>
         }
