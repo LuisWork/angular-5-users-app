@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import Swal from 'sweetalert2';
@@ -16,7 +16,11 @@ export class UserAppComponent implements OnInit {
 
   users: User[] = [];
 
-  constructor(private service: UserService, private sharingData: SharingDataService, private router: Router) { }
+  constructor(
+    private router: Router,
+    private service: UserService,
+    private sharingData: SharingDataService) {
+  }
 
   ngOnInit(): void {
     this.service.findAll().subscribe(users => this.users = users);
@@ -29,44 +33,57 @@ export class UserAppComponent implements OnInit {
     this.sharingData.findUserByIdEventEmitter.subscribe(id => {
       const user = this.users.find(user => user.id == id);
       this.sharingData.selectUserEventEmitter.emit(user);
-    });
+    })
   }
 
   addUser() {
-    this.sharingData.userEventEmitter.subscribe(user => {
+    this.sharingData.newUserEventEmitter.subscribe(user => {
       if (user.id > 0) {
-        this.users = this.users.map(u => (u.id === user.id) ? { ...user } : u);
+        this.service.update(user).subscribe(userUpdated => {
+          this.users = this.users.map(u => (u.id == userUpdated.id) ? { ...userUpdated } : u);
+          this.router.navigate(['/users'], {state: {users: this.users}});
+        })
+
       } else {
-        this.users = [... this.users, { ...user, id: new Date().getTime() }];
+        this.service.create(user).subscribe(userNew => {
+          console.log(user)
+          this.users = [... this.users, { ...userNew }];
+
+          this.router.navigate(['/users'], {state: {users: this.users}});
+        })
       }
-      this.router.navigate(['/users'], { state: { users: this.users } });
       Swal.fire({
-        title: "Good job!",
-        text: "User created",
+        title: "Guardado!",
+        text: "Usuario guardado con exito!",
         icon: "success"
       });
-    });
+    })
   }
 
   removeUser(): void {
     this.sharingData.idUserEventEmitter.subscribe(id => {
       Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
+        title: "Seguro que quiere eliminar?",
+        text: "Cuidado el usuario sera eliminado del sistema!",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
+        confirmButtonText: "Si"
       }).then((result) => {
         if (result.isConfirmed) {
-          this.users = this.users.filter(user => user.id != id);
-          this.router.navigate(['/users/create'], { skipLocationChange: true }).then(() => {
-            this.router.navigate(['/users'], { state: { users: this.users } });
-          });
+
+          this.service.remove(id).subscribe(() => {
+            this.users = this.users.filter(user => user.id != id);
+            this.router.navigate(['/users/create'], { skipLocationChange: true }).then(() => {
+              this.router.navigate(['/users'], { state: { users: this.users } });
+            });
+          })
+
+
           Swal.fire({
-            title: "Deleted!",
-            text: "Your user has been deleted.",
+            title: "Eliminado!",
+            text: "Usuario eliminado con exito.",
             icon: "success"
           });
         }
