@@ -39,37 +39,49 @@ export class UserAppComponent implements OnInit {
   addUser() {
     this.sharingData.newUserEventEmitter.subscribe(user => {
       if (user.id > 0) {
-        this.service.update(user).subscribe(userUpdated => {
-          this.users = this.users.map(u => (u.id == userUpdated.id) ? { ...userUpdated } : u);
-          this.router.navigate(['/users'], {state: {users: this.users}});
-        })
+        this.service.update(user).subscribe({
+          next: (userUpdated) => {
+            this.users = this.users.map(u => (u.id == userUpdated.id) ? { ...userUpdated } : u);
+            this.router.navigate(['/users'], { state: { users: this.users } });
+            Swal.fire({
+              title: "User Updated",
+              text: "User Updated Successfully",
+              icon: "success"
+            });
+          }, error: (err) => {
+            this.sharingData.errorsUserFormEventEmitter.emit(err.error);
+          }
+        });
 
       } else {
-        this.service.create(user).subscribe(userNew => {
-          console.log(user)
-          this.users = [... this.users, { ...userNew }];
-
-          this.router.navigate(['/users'], {state: {users: this.users}});
-        })
+        this.service.create(user).subscribe({
+          next: (userNew) => {
+            console.log(user)
+            this.users = [... this.users, { ...userNew }];
+            this.router.navigate(['/users'], { state: { users: this.users } });
+            Swal.fire({
+              title: "User Created",
+              text: "User Created Successfully",
+              icon: "success"
+            });
+          }, error: (err) => {
+            this.sharingData.errorsUserFormEventEmitter.emit(err.error);
+          }
+        });
       }
-      Swal.fire({
-        title: "Guardado!",
-        text: "Usuario guardado con exito!",
-        icon: "success"
-      });
-    })
+    });
   }
 
   removeUser(): void {
     this.sharingData.idUserEventEmitter.subscribe(id => {
       Swal.fire({
-        title: "Seguro que quiere eliminar?",
-        text: "Cuidado el usuario sera eliminado del sistema!",
+        title: "Are you sure you want delete user?",
+        text: "Warning: This action is permanent. Are you sure you want to continue?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Si"
+        confirmButtonText: "Yes"
       }).then((result) => {
         if (result.isConfirmed) {
 
@@ -82,8 +94,8 @@ export class UserAppComponent implements OnInit {
 
 
           Swal.fire({
-            title: "Eliminado!",
-            text: "Usuario eliminado con exito.",
+            title: "User Deleted!",
+            text: "The user has been deleted successfully.",
             icon: "success"
           });
         }
