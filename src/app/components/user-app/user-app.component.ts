@@ -49,7 +49,9 @@ export class UserAppComponent implements OnInit {
               icon: "success"
             });
           }, error: (err) => {
-            this.sharingData.errorsUserFormEventEmitter.emit(err.error);
+            if (err.status == 400) {
+              this.sharingData.errorsUserFormEventEmitter.emit(err.error);
+            }
           }
         });
 
@@ -65,7 +67,9 @@ export class UserAppComponent implements OnInit {
               icon: "success"
             });
           }, error: (err) => {
-            this.sharingData.errorsUserFormEventEmitter.emit(err.error);
+            if (err.status == 400) {
+              this.sharingData.errorsUserFormEventEmitter.emit(err.error);
+            }
           }
         });
       }
@@ -84,15 +88,12 @@ export class UserAppComponent implements OnInit {
         confirmButtonText: "Yes"
       }).then((result) => {
         if (result.isConfirmed) {
-
           this.service.remove(id).subscribe(() => {
             this.users = this.users.filter(user => user.id != id);
             this.router.navigate(['/users/create'], { skipLocationChange: true }).then(() => {
               this.router.navigate(['/users'], { state: { users: this.users } });
             });
-          })
-
-
+          });
           Swal.fire({
             title: "User Deleted!",
             text: "The user has been deleted successfully.",
