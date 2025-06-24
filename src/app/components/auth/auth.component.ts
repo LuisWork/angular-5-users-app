@@ -21,7 +21,7 @@ export class AuthComponent {
     if (!this.user.username || !this.user.password) {
       Swal.fire(
         'Validation Error',
-        'Username or Passwor drequired!',
+        'Username or Password required!',
         'error'
       );
     } else {
