@@ -15,32 +15,35 @@
                 <div>
                     <input class="form-control my-2" name="lastname" placeholder="Lastname" [(ngModel)]="user.lastname"
                         autocomplete="off" #lastname="ngModel">
+                    @if(errors?.lastname){
+                    <div class="text-danger">{{errors.lastname}}</div>
+                    }
                 </div>
-                @if(errors?.lastname){
-                <div class="text-danger">{{errors.lastname}}</div>
-                }
                 <div>
                     <input class="form-control my-2" name="email" type="email" [(ngModel)]="user.email"
                         autocomplete="off" #email="ngModel" placeholder="Email">
+                    @if(errors?.email){
+                    <div class="text-danger">{{errors.email}}</div>
+                    }
                 </div>
-                @if(errors?.email){
-                <div class="text-danger">{{errors.email}}</div>
-                }
                 <div>
                     <input class="form-control my-2" name="username" placeholder="Username" [(ngModel)]="user.username"
                         autocomplete="off" #username="ngModel">
+                    @if(errors?.username){
+                    <div class="text-danger">{{errors.username}}</div>
+                    }
                 </div>
-                @if(errors?.username){
-                <div class="text-danger">{{errors.username}}</div>
-                }
 
+                @if(!(user.id > 0)) {
                 <div>
                     <input type="password" class="form-control my-2" name="password" placeholder="Password"
                         [(ngModel)]="user.password" autocomplete="off" #password="ngModel">
-                </div>
-                @if(errors?.password){
-                        <div class="text-danger">{{errors.password}}</div>
+                    @if(errors?.password){
+                    <div class="text-danger">{{errors.password}}</div>
                     }
+                </div>
+                }
+
                 <div>
                     <button class="btn btn-dark m-2" type="submit">{{(user.id > 0) ?
                         'Update' : 'Create'}}</button>

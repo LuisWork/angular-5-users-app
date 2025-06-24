@@ -65,7 +65,7 @@ export class AuthService {
     return this.user.isAdmin;
   }
 
-  isAuth() {
+  authenticated() {
     return this.user.isAuth;
   }
 
