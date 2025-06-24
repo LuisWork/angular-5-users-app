@@ -61,4 +61,11 @@ export class AuthService {
     return null;
   }
   
+  isAdmin() {
+    return this.user.isAdmin;
+  }
+
+  isAuth() {
+    return this.user.isAuth;
+  }
 }

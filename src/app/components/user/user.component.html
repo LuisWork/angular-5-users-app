@@ -1,5 +1,8 @@
 <h1>{{title}}</h1>
+
+@if (admin) {
 <button class="btn btn-primary my-3" [routerLink]="['/users/create']">Create User</button>
+}
 
 @if(users.length == 0) {
 <div class="alert alert-info">
@@ -14,8 +17,10 @@
             <th>Lastname:</th>
             <th>Email:</th>
             <th>Username:</th>
+            @if (admin) {
             <th>Update:</th>
             <th>Remove:</th>
+            }
         </tr>
     </thead>
     <tbody>
@@ -26,11 +31,13 @@
             <td>{{user.lastname}}</td>
             <td>{{user.email}}</td>
             <td>{{user.username}}</td>
+            @if (admin) {
             <td><button class="btn btn-success btn-sm" [routerLink]="['/users/edit', user.id]">Update</button></td>
             <td><button class="btn btn-danger btn-sm" (click)="onRemoveUser(user.id)">Remove</button></td>
+            }
         </tr>
         }
     </tbody>
 </table>
 }
-<app-paginator [paginator]="paginator" [url]="'/users/page'"/>
+<app-paginator [paginator]="paginator" [url]="'/users/page'" />
