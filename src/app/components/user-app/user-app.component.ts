@@ -30,7 +30,7 @@ export class UserAppComponent implements OnInit {
     this.store.select('users').subscribe(state => {
       this.users = state.users;
       this.paginator = state.paginator;
-      this.user = state.user;
+      this.user = {... state.user};
     });
   }
 
